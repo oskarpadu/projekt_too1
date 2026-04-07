@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const importRouter = require('./routes/imports.js');
+const readingsRouter = require('./routes/readings.js');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/api/import', importRouter);
+app.use('/api/readings', readingsRouter);
 
 const sequelize = require('./util/db');
 

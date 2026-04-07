@@ -21,7 +21,7 @@ const EnergyReadings = sequelize.define('EnergyReadings', {
         allowNull: true,
     },
     source: {
-        type: Sequelize.ENUM('Upload', 'API'),
+        type: Sequelize.ENUM('UPLOAD', 'API'),
         allowNull: false,
     },
     createdAt: {

@@ -1,0 +1,32 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const sequelize = require('./util/db');
+
+const models = require('./models/EnergyReadings');
+sequelize.models = models;
+
+const healthRouter = require('./routes/health');
+app.use('/api', healthRouter);
+
+sequelize
+    .sync()
+    .then(() => {
+        console.log('Database synced successfully.');
+    })
+    .catch((err) => {
+        console.error('Error syncing database:', err);
+    });
+
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the Energy Price API!' });
+});
+
+app.listen(3001, () => {
+    console.log('Server is running on port http://localhost:3001');
+});

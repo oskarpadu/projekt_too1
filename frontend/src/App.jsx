@@ -35,6 +35,18 @@ function App() {
     setLoading(false);
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/readings?source=UPLOAD', {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      setMessage(data.message || data.error);
+    } catch (err) {
+      setMessage('Cleanup failed. Please try again.');
+    }
+  };
+
   return (
     <div style={{ padding: '2rem', padding: '2rem', margin: '0 auto' }}>
       <h1>Energy Dashboard</h1>
@@ -78,6 +90,10 @@ function App() {
 
       <button onClick={handleSync} disabled={loading}>
         {loading ? 'Loading...' : 'Sync Prices'}
+      </button>
+
+      <button onClick={handleDelete} style={{ marginLeft: '1rem' }}>
+        Delete UPLOAD data
       </button>
 
       {message && <p style={{ color: 'green' }}>{message}</p>}

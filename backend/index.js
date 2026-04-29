@@ -37,3 +37,8 @@ app.get('/', (req, res) => {
 app.listen(3001, () => {
     console.log('Server is running on port http://localhost:3001');
 });
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal server error' });
+});

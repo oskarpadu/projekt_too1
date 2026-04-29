@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import Dashboard from './DashBoard';
 
 function App() {
   const [location, setLocation] = useState('EE');
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
+  const [start, setStart] = useState('2026-04-07T00:00:00Z');
+  const [end, setEnd] = useState('2026-04-08T23:59:59Z');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
@@ -35,24 +36,34 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto' }}>
+    <div style={{ padding: '2rem', padding: '2rem', margin: '0 auto' }}>
       <h1>Energy Dashboard</h1>
 
       <h2>Sünkroniseeri elektrihinnad</h2>
 
       <div style={{ marginBottom: '1rem' }}>
         <label>Algusaeg:</label><br />
-        <input
-          type="datetime-local"
-          onChange={e => setStart(new Date(e.target.value).toISOString())}
-        />
+      <input
+        type="date"
+        defaultValue="2026-04-07"
+        onChange={e => {
+          const iso = e.target.value + 'T00:00:00Z';
+          setStart(iso);
+          console.log('start:', iso);
+        }}
+      />
       </div>
 
       <div style={{ marginBottom: '1rem' }}>
         <label>Lõppaeg:</label><br />
-        <input
-          type="datetime-local"
-          onChange={e => setEnd(new Date(e.target.value).toISOString())}
+      <input
+        type="date"
+        defaultValue="2026-04-08"
+        onChange={e => {
+          const iso = e.target.value + 'T23:59:59Z';
+          setEnd(iso);
+          console.log('end:', iso);
+        }}
         />
       </div>
 
@@ -71,6 +82,8 @@ function App() {
 
       {message && <p style={{ color: 'green' }}>{message}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <Dashboard />
     </div>
   );
 }
